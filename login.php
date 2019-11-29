@@ -1,47 +1,59 @@
+<?php
+    require 'connection.php';
+    session_start();
+?>
 <!DOCTYPE html>
 <html>
-<meta charset="utf-8">
-<title>Login</title>
-<link rel="stylesheet" href="css/style.css" />
-</head>
-<body>
-<?php
-require('db.php');
-session_start();
-// If form submitted, insert values into the database.
-if (isset($_POST['username'])){
-        // removes backslashes
-	$username = stripslashes($_REQUEST['username']);
-        //escapes special characters in a string
-	$username = mysqli_real_escape_string($con,$username);
-	$password = stripslashes($_REQUEST['password']);
-	$password = mysqli_real_escape_string($con,$password);
-	//Checking is user existing in the database or not
-        $query = "SELECT * FROM `users` WHERE username='$username'
-and password='".md5($password)."'";
-	$result = mysqli_query($con,$query) or die(mysql_error());
-	$rows = mysqli_num_rows($result);
-        if($rows==1){
-	    $_SESSION['username'] = $username;
-            // Redirect user to index.php
-	    header("Location: index.php");
-         }else{
-	echo "<div class='form'>
-<h3>Username/password is incorrect.</h3>
-<br/>Click here to <a href='login.php'>Login</a></div>";
-	}
-    }else{
-?>
-<div class="form">
-<h1>Log In</h1>
-<form action="" method="post" name="login">
-<input type="text" name="username" placeholder="Username" required />
-<input type="password" name="password" placeholder="Password" required />
-<br>
-<input name="submit" type="submit" value="Login" />
-</form>
-<p>Not registered yet? <a href='registration.php'>Register Here</a></p>
-</div>
-<?php } ?>
-</body>
+    <head>
+        <link rel="shortcut icon" href="img/lifestyleStore.png" />
+        <title>Hotel Management System</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- latest compiled and minified CSS -->
+        <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" type="text/css">
+        <!-- jquery library -->
+        <script type="text/javascript" src="bootstrap/js/jquery-3.2.1.min.js"></script>
+        <!-- Latest compiled and minified javascript -->
+        <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+        <!-- External CSS -->
+        <link rel="stylesheet" href="css/style.css" type="text/css">
+    </head>
+    <body>
+        <div>
+            
+            <br><br><br>
+           <div class="container">
+                <div class="row">
+                    <div class="col-xs-6 col-xs-offset-3">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <h3>LOGIN</h3>
+                            </div>
+                            <div class="panel-body">
+                                <p>Login to make reservations</p>
+                                <form method="post" action="">
+                                    <div class="form-group">
+                                        <input type="email" class="form-control" name="email" placeholder="Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="password" class="form-control" name="password" placeholder="Password(min. 6 characters)" pattern=".{6,}">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="submit" value="Login" class="btn btn-primary">
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="panel-footer">Don't have an account yet? <a href="signup.php">Register</a></div>
+                        </div>
+                    </div>
+                </div>
+           </div>
+           <br><br><br><br><br>
+           <footer class="footer">
+               <div class="container">
+               
+               </div>
+           </footer>
+        </div>
+    </body>
 </html>
